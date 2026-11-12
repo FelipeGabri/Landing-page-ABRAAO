@@ -1,0 +1,927 @@
+/* =======================================================================
+   ABRAÃO J MIGUEL ADVOCACIA DO AGRO — LANDING PAGE (TRÁFEGO PAGO)
+   Mesmo design system do style.css do site principal:
+   verde profundo + oliva, Fraunces nos títulos, Inter no corpo,
+   botões em pílula e cards com cantos arredondados.
+   Nomes de classe em português, seguindo o padrão do site.
+   As fontes são carregadas via <link> no HTML (mais rápido que @import).
+======================================================================== */
+
+/* =======================
+   PALETA DE CORES
+======================= */
+
+:root {
+    /* Verdes institucionais */
+    --verde-noite: #0b1f10;
+    --verde-profundo: #0f2b14;
+    --verde-carvao: #08130a;
+
+    /* Acento oliva (assinatura visual) */
+    --oliva: #93b23f;
+    --oliva-claro: #b7d16b;
+    --oliva-escuro: #6f8a2c;
+
+    /* Neutros */
+    --creme: #f7f5ee;
+    --creme-escuro: #efebdf;
+    --branco: #ffffff;
+    --texto-principal: #1c1f18;
+    --texto-secundario: #5b6155;
+    --texto-sobre-verde: #d9e2cf;
+
+    --sombra-card: rgba(15, 30, 15, .10);
+
+    /* Tipografia */
+    --fonte-display: 'Fraunces', Georgia, serif;
+    --fonte-corpo: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* =======================
+   RESET
+======================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    background: var(--creme);
+    color: var(--texto-principal);
+    line-height: 1.65;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+}
+
+/* Respeita usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* =======================
+   UTILITÁRIOS DE SEÇÃO
+======================= */
+
+section {
+    padding: 110px 8%;
+    position: relative;
+}
+
+.etiqueta-secao {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--oliva-escuro);
+    margin-bottom: 14px;
+}
+
+.etiqueta-secao::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--oliva);
+    display: inline-block;
+}
+
+.cabecalho-secao {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 50px;
+}
+
+.cabecalho-secao .etiqueta-secao {
+    justify-content: center;
+}
+
+section h2 {
+    font-family: var(--fonte-display);
+    font-weight: 600;
+    font-size: 2.6rem;
+    line-height: 1.2;
+    color: var(--verde-noite);
+    letter-spacing: -.01em;
+}
+
+.destaque-oliva {
+    color: var(--oliva);
+    font-style: italic;
+}
+
+.subtitulo-secao {
+    margin-top: 16px;
+    color: var(--texto-secundario);
+    font-size: 1.08rem;
+}
+
+/* Reveal ao rolar — só ativa se o JS rodar (classe .js no <html>) */
+.js .revelar {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.js .revelar.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =======================
+   CABEÇALHO (logo + CTA, sem menu para não vazar o tráfego)
+======================= */
+
+.cabecalho-site {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 6%;
+    color: var(--branco);
+}
+
+.logo-escritorio {
+    width: 120px;
+    height: auto;
+}
+
+.botao-cabecalho {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    color: var(--branco);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: .25s;
+    backdrop-filter: blur(8px);
+}
+
+.botao-cabecalho:hover {
+    background: var(--branco);
+    color: var(--verde-noite);
+    border-color: var(--branco);
+}
+
+/* =======================
+   BOTÕES
+======================= */
+
+.botao-principal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--oliva);
+    color: var(--verde-carvao);
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 999px;
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    font-size: .95rem;
+    transition: .25s;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-principal:hover {
+    background: var(--oliva-escuro);
+    color: var(--branco);
+    transform: translateY(-2px);
+}
+
+.botao-secundario {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    backdrop-filter: blur(8px);
+    color: var(--branco);
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, .5);
+    font-weight: 600;
+    font-size: .95rem;
+    transition: .25s;
+}
+
+.botao-secundario:hover {
+    background: rgba(255, 255, 255, .1);
+    border-color: var(--branco);
+}
+
+.acao-centralizada {
+    text-align: center;
+    margin-top: 48px;
+}
+
+/* =======================
+   HERO
+======================= */
+
+.hero-principal {
+    position: relative;
+    color: var(--branco);
+    padding: 110px 8% 0;
+    overflow: hidden;
+    background: var(--verde-noite);
+}
+
+.video-fundo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+}
+
+.overlay-hero {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(5, 32, 16, .80), rgba(5, 32, 16, .86));
+    z-index: 1;
+}
+
+.grade-hero {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    align-items: center;
+    gap: 50px;
+    max-width: 1300px;
+    margin: 3% auto 5%;
+    position: relative;
+    z-index: 2;
+}
+
+.conteudo-hero {
+    padding-bottom: 60px;
+}
+
+.hero-principal .etiqueta-secao {
+    color: var(--oliva-claro);
+}
+
+.conteudo-hero h1 {
+    font-family: var(--fonte-display);
+    font-size: 2.7rem;
+    line-height: 1.15;
+    font-weight: 600;
+    margin: 18px 0 22px;
+    max-width: 660px;
+}
+
+.conteudo-hero p {
+    font-size: 1.05rem;
+    color: var(--texto-sobre-verde);
+    max-width: 540px;
+    margin-bottom: 32px;
+}
+
+.botoes-hero {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.logo-hero-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.logo-hero-grande {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, .4));
+    animation: flutuarLogo 4s ease-in-out infinite;
+}
+
+@keyframes flutuarLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* =======================
+   SEÇÃO — CONFLITO PATRIMONIAL (fundo branco)
+======================= */
+
+.secao-conflito {
+    background: var(--branco);
+}
+
+.texto-secao {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.texto-secao p {
+    margin-bottom: 18px;
+    color: var(--texto-secundario);
+    font-size: 1.05rem;
+}
+
+.texto-secao p:last-child {
+    margin-bottom: 0;
+}
+
+.citacao-destaque {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    padding: 26px 32px;
+    background: var(--creme);
+    border-left: 4px solid var(--oliva);
+    border-radius: 0 16px 16px 0;
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: var(--verde-noite);
+}
+
+.grade-pontos-impacto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 50px auto 0;
+}
+
+.ponto-impacto {
+    background: var(--creme);
+    border-radius: 16px;
+    padding: 32px 26px;
+    transition: .3s;
+    border: 1px solid transparent;
+}
+
+.ponto-impacto:hover {
+    transform: translateY(-6px);
+    border-color: var(--oliva-claro);
+    box-shadow: 0 15px 35px var(--sombra-card);
+}
+
+.icone-ponto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(147, 178, 63, .15);
+    color: var(--oliva-escuro);
+    margin-bottom: 16px;
+}
+
+.icone-ponto svg {
+    width: 24px;
+    height: 24px;
+}
+
+.ponto-impacto h3 {
+    font-family: var(--fonte-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+    margin-bottom: 8px;
+}
+
+.ponto-impacto p {
+    color: var(--texto-secundario);
+    font-size: .96rem;
+}
+
+/* =======================
+   SEÇÃO — PLANEJAMENTO SUCESSÓRIO (fundo verde escuro)
+======================= */
+
+.secao-diferenciais {
+    background: var(--verde-noite);
+    color: var(--branco);
+}
+
+.secao-diferenciais .cabecalho-secao h2 {
+    color: var(--branco);
+}
+
+.secao-diferenciais .etiqueta-secao {
+    color: var(--oliva-claro);
+}
+
+.secao-diferenciais .texto-secao p {
+    color: var(--texto-sobre-verde);
+}
+
+.grade-diferenciais {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.cartao-diferencial {
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 16px;
+    padding: 32px 28px;
+    transition: .3s;
+}
+
+.cartao-diferencial:hover {
+    background: rgba(255, 255, 255, .09);
+    transform: translateY(-5px);
+}
+
+.numero-pilar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(147, 178, 63, .18);
+    color: var(--oliva-claro);
+    font-family: var(--fonte-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 18px;
+}
+
+.cartao-diferencial h3 {
+    font-family: var(--fonte-display);
+    color: var(--oliva-claro);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.cartao-diferencial p {
+    color: var(--texto-sobre-verde);
+    font-size: .95rem;
+}
+
+.fechamento-secao {
+    max-width: 800px;
+    margin: 44px auto 0;
+    text-align: center;
+    color: var(--texto-sobre-verde);
+    font-size: 1.05rem;
+}
+
+/* =======================
+   SEÇÃO — PARA QUEM ATUAMOS (fundo creme)
+======================= */
+
+.secao-publico {
+    background: var(--creme);
+}
+
+.secao-publico .ponto-impacto {
+    background: var(--branco);
+    box-shadow: 0 4px 18px var(--sombra-card);
+}
+
+/* =======================
+   SEÇÃO — FORMULÁRIO / CTA FINAL (fundo verde escuro)
+======================= */
+
+.secao-cta-final {
+    background: var(--verde-noite);
+    color: var(--branco);
+    overflow: hidden;
+}
+
+.grade-contato {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.texto-contato .etiqueta-secao {
+    color: var(--oliva-claro);
+}
+
+.texto-contato h2 {
+    color: var(--branco);
+    margin-bottom: 20px;
+    font-size: 2.3rem;
+}
+
+.texto-contato p {
+    color: var(--texto-sobre-verde);
+    font-size: 1.05rem;
+    margin-bottom: 26px;
+}
+
+.lista-garantias {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lista-garantias li {
+    position: relative;
+    padding-left: 30px;
+    color: var(--texto-sobre-verde);
+    font-size: .98rem;
+}
+
+.lista-garantias li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(147, 178, 63, .22);
+    color: var(--oliva-claro);
+    font-size: .75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulario-contato {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 38px 34px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .35);
+    color: var(--texto-principal);
+}
+
+.formulario-contato h3 {
+    font-family: var(--fonte-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--verde-noite);
+    margin-bottom: 4px;
+}
+
+.formulario-contato .subtitulo-form {
+    color: var(--texto-secundario);
+    font-size: .92rem;
+    margin-bottom: 8px;
+}
+
+.formulario-contato label {
+    display: block;
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--verde-profundo);
+    margin: 16px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.formulario-contato input,
+.formulario-contato select,
+.formulario-contato textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid #d9d6c8;
+    border-radius: 12px;
+    font-family: var(--fonte-corpo);
+    font-size: .98rem;
+    color: var(--texto-principal);
+    background: var(--creme);
+    transition: .2s;
+}
+
+.formulario-contato textarea {
+    resize: vertical;
+}
+
+.formulario-contato input:focus,
+.formulario-contato select:focus,
+.formulario-contato textarea:focus {
+    outline: none;
+    border-color: var(--oliva);
+    box-shadow: 0 0 0 3px rgba(147, 178, 63, .25);
+    background: var(--branco);
+}
+
+.formulario-contato .botao-principal {
+    width: 100%;
+    margin-top: 24px;
+    padding: 17px;
+    font-size: 1rem;
+}
+
+.aviso-lgpd {
+    font-size: .76rem;
+    margin-top: 14px;
+    color: var(--texto-secundario);
+    text-align: center;
+}
+
+.aviso-lgpd a {
+    color: var(--oliva-escuro);
+    font-weight: 600;
+}
+
+/* =======================
+   BOTÃO FLUTUANTE DO WHATSAPP
+======================= */
+
+.botao-whatsapp-flutuante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+    z-index: 2000;
+    transition: .3s;
+}
+
+.botao-whatsapp-flutuante:hover {
+    transform: scale(1.08);
+}
+
+.botao-whatsapp-flutuante svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* =======================
+   RODAPÉ (3 colunas + faixa inferior)
+======================= */
+
+.rodape-site {
+    background: var(--verde-carvao);
+    color: var(--branco);
+    padding: 60px 8% 30px;
+    border-top: 4px solid var(--oliva-claro);
+}
+
+.rodape-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.rodape-coluna {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.titulo-coluna {
+    font-family: var(--fonte-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--oliva-claro);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.logo-rodape {
+    max-width: 150px;
+    height: auto;
+}
+
+.marca-rodape .nome-escritorio {
+    font-family: var(--fonte-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.marca-rodape .direitos {
+    font-size: .88rem;
+    color: var(--texto-sobre-verde);
+    line-height: 1.65;
+}
+
+.lista-contato {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lista-contato li {
+    font-size: .92rem;
+    color: var(--texto-sobre-verde);
+}
+
+.lista-contato strong {
+    color: var(--branco);
+}
+
+.lista-contato a,
+.links-institucionais-rodape a {
+    color: var(--texto-sobre-verde);
+    text-decoration: none;
+    font-size: .92rem;
+    transition: color .3s ease;
+}
+
+.lista-contato a:hover,
+.links-institucionais-rodape a:hover {
+    color: var(--oliva-claro);
+    text-decoration: underline;
+}
+
+.links-institucionais-rodape {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mt-redes {
+    margin-top: 14px;
+}
+
+.redes-sociais-rodape {
+    display: flex;
+    gap: 14px;
+}
+
+.redes-sociais-rodape a {
+    color: var(--branco);
+    background: rgba(255, 255, 255, .06);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+}
+
+.redes-sociais-rodape a:hover {
+    color: var(--oliva-claro);
+    background: rgba(255, 255, 255, .12);
+    transform: translateY(-3px);
+}
+
+.rodape-base {
+    max-width: 1200px;
+    margin: 44px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.rodape-base p {
+    font-size: .8rem;
+    color: var(--texto-sobre-verde);
+    opacity: .85;
+}
+
+/* =======================
+   RESPONSIVIDADE
+======================= */
+
+@media (max-width: 991px) {
+
+    .grade-hero {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 12%;
+    }
+
+    .logo-hero-container {
+        display: none;
+    }
+
+    .conteudo-hero {
+        padding-bottom: 40px;
+    }
+
+    .grade-contato {
+        grid-template-columns: 1fr;
+        gap: 44px;
+    }
+
+    .rodape-container {
+        grid-template-columns: 1fr;
+        gap: 38px;
+        text-align: center;
+    }
+
+    .rodape-coluna {
+        align-items: center;
+    }
+
+    .redes-sociais-rodape {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+
+    section {
+        padding: 64px 6%;
+    }
+
+    section h2,
+    .texto-contato h2 {
+        font-size: 1.85rem;
+    }
+
+    .hero-principal {
+        padding-top: 90px;
+    }
+
+    .conteudo-hero h1 {
+        font-size: 2.05rem;
+    }
+
+    .botoes-hero {
+        flex-direction: column;
+    }
+
+    .botoes-hero .botao-principal,
+    .botoes-hero .botao-secundario {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .logo-escritorio {
+        width: 96px;
+    }
+
+    .botao-cabecalho {
+        padding: 9px 16px;
+        font-size: .8rem;
+    }
+
+    .citacao-destaque {
+        font-size: 1.1rem;
+        padding: 22px 22px;
+    }
+
+    .formulario-contato {
+        padding: 30px 22px;
+    }
+
+    .botao-whatsapp-flutuante {
+        width: 52px;
+        height: 52px;
+        bottom: 18px;
+        right: 18px;
+    }
+
+    .botao-whatsapp-flutuante svg {
+        width: 26px;
+        height: 26px;
+    }
+}
