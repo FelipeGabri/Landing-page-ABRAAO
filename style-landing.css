@@ -924,4 +924,54 @@ section h2 {
         width: 26px;
         height: 26px;
     }
+
+    /* ---- Rodapé compacto no celular ----
+       Fica só: nome + OAB, ícones de redes, link de privacidade e aviso legal.
+       Para exibir algo de volta, remova a regra correspondente abaixo. */
+    .rodape-site {
+        padding: 32px 6% 22px;
+    }
+
+    .rodape-container {
+        gap: 16px;
+    }
+
+    .logo-rodape,
+    .contato-rodape,
+    .descricao-rodape,
+    .rodape-site .titulo-coluna,
+    .marca-rodape .direitos br {
+        display: none;
+    }
+
+    .rodape-coluna {
+        gap: 6px;
+    }
+
+    .marca-rodape .nome-escritorio {
+        font-size: 1rem;
+    }
+
+    .oab-rodape {
+        font-size: .85rem;
+    }
+
+    .links-redes-rodape {
+        gap: 12px;
+    }
+
+    .redes-sociais-rodape a {
+        width: 38px;
+        height: 38px;
+    }
+
+    .rodape-base {
+        margin-top: 20px;
+        padding-top: 16px;
+        gap: 4px;
+    }
+
+    .rodape-base p {
+        font-size: .72rem;
+    }
 }
