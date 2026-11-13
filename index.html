@@ -29,6 +29,26 @@
          Google Tag Manager (script), Meta Pixel, Google Ads (gtag.js)
     ============================================================= -->
 
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '921227330280781');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=921227330280781&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+
     <!-- /FIM DO ESPAÇO DE RASTREAMENTO (HEAD) -->
 </head>
 
@@ -193,8 +213,8 @@
 
         <div class="cabecalho-secao revelar">
             <span class="etiqueta-secao">Planejamento sucessório</span>
-            <h2>Te venderam que a holding familiar resolve a sua sucessão? Cuidado. <span class="destaque-oliva">Ela
-                    pode ser uma armadilha.</span></h2>
+            <h2>Te venderam que a holding familiar resolve a sua sucessão? Cuidado. <span
+                    class="destaque-oliva">Ela pode ser uma armadilha.</span></h2>
         </div>
 
         <div class="texto-secao revelar">
@@ -392,9 +412,8 @@
                 <span class="nome-escritorio">ABRAÃO J MIGUEL — ADVOCACIA DO AGRO</span>
                 <p class="direitos">
                     <span class="oab-rodape">OAB/PR 91.291</span><br>
-                    <span class="descricao-rodape">Conflito patrimonial, planejamento sucessório e estruturas
-                        societárias para o agronegócio e
-                        empresas.</span>
+                    <span class="descricao-rodape">Conflito patrimonial, planejamento sucessório e estruturas societárias para o agronegócio e
+                    empresas.</span>
                 </p>
             </div>
 

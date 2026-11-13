@@ -73,6 +73,9 @@ document.getElementById('formularioContato').addEventListener('submit', function
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'lead_formulario', assunto: tema });
 
+    // Meta Pixel: conversão de Lead
+    if (window.fbq) { fbq('track', 'Lead', { content_name: tema }); }
+
     window.open('https://wa.me/' + NUMERO_WHATSAPP + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
 });
 
@@ -83,5 +86,8 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
     el.addEventListener('click', function () {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({ event: 'clique_cta', local: el.getAttribute('data-evento') });
+
+        // Meta Pixel: clique no WhatsApp conta como Contato
+        if (window.fbq && el.href && el.href.indexOf('wa.me') !== -1) { fbq('track', 'Contact'); }
     });
 });
