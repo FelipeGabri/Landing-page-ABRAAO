@@ -975,3 +975,86 @@ section h2 {
         font-size: .72rem;
     }
 }
+
+/* =======================
+   PÁGINA DE POLÍTICA DE PRIVACIDADE
+======================= */
+
+.cabecalho-interno {
+    position: relative;
+    background: var(--verde-noite);
+}
+
+.pagina-politica {
+    background: var(--creme);
+    padding: 70px 8% 90px;
+}
+
+.conteudo-politica {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 50px 48px;
+    box-shadow: 0 10px 35px var(--sombra-card);
+}
+
+.conteudo-politica h1 {
+    font-family: var(--fonte-display);
+    font-weight: 600;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    color: var(--verde-noite);
+    margin-bottom: 8px;
+}
+
+.conteudo-politica .atualizacao {
+    color: var(--texto-secundario);
+    font-size: .88rem;
+    margin-bottom: 28px;
+}
+
+.conteudo-politica h2 {
+    font-size: 1.3rem;
+    margin: 34px 0 10px;
+    color: var(--verde-profundo);
+}
+
+.conteudo-politica p,
+.conteudo-politica li {
+    color: var(--texto-secundario);
+    font-size: 1rem;
+}
+
+.conteudo-politica p {
+    margin-bottom: 12px;
+}
+
+.conteudo-politica ul {
+    margin: 0 0 12px 0;
+    padding-left: 22px;
+    list-style: disc;
+}
+
+.conteudo-politica li {
+    margin-bottom: 6px;
+}
+
+.conteudo-politica a {
+    color: var(--oliva-escuro);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .pagina-politica {
+        padding: 36px 5% 60px;
+    }
+
+    .conteudo-politica {
+        padding: 32px 22px;
+    }
+
+    .conteudo-politica h1 {
+        font-size: 1.7rem;
+    }
+}
