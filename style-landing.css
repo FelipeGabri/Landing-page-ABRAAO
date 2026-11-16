@@ -1061,25 +1061,20 @@ section h2 {
 
 
 /* =======================
-   VÍDEO DE INTRODUÇÃO (tela cheia)
+   VÍDEO DE INTRODUÇÃO (primeira seção, tela cheia)
 ======================= */
 
-body.sem-rolagem {
-    overflow: hidden;
-}
-
 .intro-video {
-    position: fixed;
-    inset: 0;
-    z-index: 5000;
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 480px;
+    padding: 0;
     background: #000;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.intro-video.aberto {
-    display: flex;
+    overflow: hidden;
 }
 
 /* Fundo desfocado que preenche as laterais no computador */
@@ -1114,14 +1109,14 @@ body.sem-rolagem {
     pointer-events: none;
     background:
         linear-gradient(to bottom, rgba(0, 0, 0, .55) 0, rgba(0, 0, 0, 0) 22%),
-        linear-gradient(to top, rgba(0, 0, 0, .65) 0, rgba(0, 0, 0, 0) 28%);
+        linear-gradient(to top, rgba(0, 0, 0, .7) 0, rgba(0, 0, 0, 0) 32%);
 }
 
-.intro-fechar,
 .intro-som {
     position: absolute;
     z-index: 3;
     top: calc(16px + env(safe-area-inset-top, 0px));
+    left: 16px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -1133,23 +1128,6 @@ body.sem-rolagem {
     font-size: 1rem;
     cursor: pointer;
     transition: .2s;
-}
-
-.intro-fechar {
-    right: 16px;
-    background: rgba(0, 0, 0, .6);
-    color: var(--branco);
-    border: 1.5px solid rgba(255, 255, 255, .55);
-    backdrop-filter: blur(8px);
-}
-
-.intro-fechar:hover {
-    background: var(--branco);
-    color: var(--verde-noite);
-}
-
-.intro-som {
-    left: 16px;
     background: var(--oliva);
     color: var(--verde-carvao);
     border: 2px solid var(--branco);
@@ -1187,12 +1165,22 @@ body.sem-rolagem {
     100% { box-shadow: 0 0 0 0 rgba(147, 178, 63, 0); }
 }
 
+.intro-logo {
+    position: absolute;
+    z-index: 3;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    right: 16px;
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .5));
+}
+
 .intro-agendar {
     position: absolute;
     z-index: 3;
     left: 50%;
     transform: translateX(-50%);
-    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
     width: min(90%, 420px);
     padding: 18px 28px;
     font-size: 1.1rem;
@@ -1203,20 +1191,45 @@ body.sem-rolagem {
     transform: translateX(-50%) translateY(-2px);
 }
 
+.intro-rolar {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--branco);
+    text-decoration: none;
+    font-size: .88rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: .9;
+}
+
+.intro-rolar svg {
+    width: 20px;
+    height: 20px;
+    animation: quicarSeta 1.4s ease-in-out infinite;
+}
+
+@keyframes quicarSeta {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
 @media (max-width: 480px) {
-    .intro-fechar,
     .intro-som {
         font-size: .9rem;
         padding: 11px 16px;
         gap: 8px;
-    }
-
-    .intro-fechar {
-        right: 12px;
-    }
-
-    .intro-som {
         left: 12px;
+    }
+
+    .intro-logo {
+        width: 80px;
+        right: 12px;
     }
 }
 

@@ -94,9 +94,10 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
 
 
 // ------------------------------------------------------------
-// 5. Vídeo de introdução em tela cheia
+// 5. Vídeo de introdução (primeira seção da página)
 //    - tenta começar COM som; se o navegador bloquear, começa
 //      sem som e o botão "Ativar som" fica pulsando
+//    - pausa quando a pessoa rola para baixo e retoma ao voltar
 //    - fundo desfocado sincronizado no computador/tablet
 // ------------------------------------------------------------
 (function () {
@@ -107,9 +108,7 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
     var fundo = document.getElementById('introFundo');
     var btnSom = document.getElementById('introSom');
     var txtSom = document.getElementById('introSomTexto');
-    var btnFechar = document.getElementById('introFechar');
-    var btnAgendar = document.getElementById('introAgendar');
-    var fechado = false;
+    var nada = function () { };
 
     function evento(nome) {
         window.dataLayer = window.dataLayer || [];
@@ -125,20 +124,30 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
 
     // Fundo desfocado só quando a tela é mais "larga" que o vídeo vertical
     function atualizarFundo() {
-        if (fechado) return;
         var usar = (window.innerWidth / window.innerHeight) > 0.6;
         intro.classList.toggle('com-fundo', usar);
         if (usar) {
             fundo.currentTime = v.currentTime;
-            if (!v.paused) { fundo.play().catch(function () { }); }
+            if (!v.paused) { fundo.play().catch(nada); }
         } else {
             fundo.pause();
         }
     }
 
+    // Toca; se o navegador bloquear o som, toca sem som
+    function tocar() {
+        var t = v.play();
+        if (t && t.catch) {
+            t.catch(function () {
+                v.muted = true;
+                v.play().catch(nada);
+            });
+        }
+    }
+
     v.addEventListener('volumechange', atualizarSom);
     v.addEventListener('play', function () {
-        if (intro.classList.contains('com-fundo')) { fundo.play().catch(function () { }); }
+        if (intro.classList.contains('com-fundo')) { fundo.play().catch(nada); }
     });
     v.addEventListener('pause', function () { fundo.pause(); });
     v.addEventListener('timeupdate', function () {
@@ -152,7 +161,7 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
     btnSom.addEventListener('click', function () {
         intro.removeEventListener('pointerdown', primeiroToque);
         v.muted = !v.muted;
-        if (!v.muted && v.paused) { v.play().catch(function () { }); }
+        if (!v.muted && v.paused) { tocar(); }
         evento(v.muted ? 'video_som_desligado' : 'video_som_ligado');
     });
 
@@ -162,64 +171,41 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
         intro.removeEventListener('pointerdown', primeiroToque);
         if (v.muted) {
             v.muted = false;
-            if (v.paused) { v.play().catch(function () { }); }
+            if (v.paused) { tocar(); }
         }
     }
     intro.addEventListener('pointerdown', primeiroToque);
 
-    function fechar() {
-        if (fechado) return;
-        fechado = true;
-        v.pause();
-        fundo.pause();
-        intro.classList.remove('aberto', 'com-fundo');
-        document.body.classList.remove('sem-rolagem');
-    }
-
-    btnFechar.addEventListener('click', function () {
-        evento('video_fechado');
-        fechar();
-    });
-
-    btnAgendar.addEventListener('click', function (e) {
-        e.preventDefault();
-        fechar();
-        var alvo = document.getElementById('agendar');
-        if (alvo) { alvo.scrollIntoView({ behavior: 'smooth' }); }
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { fechar(); }
-    });
-
-    // Abre o vídeo e tenta tocar com som
-    function abrir(reiniciar) {
-        fechado = false;
-        intro.classList.add('aberto');
-        document.body.classList.add('sem-rolagem');
-        if (reiniciar) { v.currentTime = 0; }
-        v.muted = false;
-        var tentativa = v.play();
-        if (tentativa && tentativa.catch) {
-            tentativa.then(atualizarFundo).catch(function () {
-                // Navegador bloqueou o som automático: começa sem som
-                v.muted = true;
-                v.play().then(atualizarFundo).catch(function () { });
+    // Pausa ao sair da tela (quem rola para ler não fica ouvindo o áudio)
+    // e retoma ao voltar para o vídeo
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entradas) {
+            entradas.forEach(function (e) {
+                if (e.isIntersecting) {
+                    if (v.paused && !v.ended) { tocar(); }
+                } else {
+                    v.pause();
+                }
             });
-        }
-        atualizarSom();
-        atualizarFundo();
+        }, { threshold: 0.35 }).observe(intro);
     }
 
-    // Botão "ASSISTIR VÍDEO" do hero: reabre o vídeo desde o início
+    // Botão "ASSISTIR VÍDEO" do hero: volta ao topo e reinicia com som
     var btnAssistir = document.getElementById('botaoAssistir');
     if (btnAssistir) {
         btnAssistir.addEventListener('click', function () {
             evento('video_reaberto');
-            abrir(true);
+            intro.removeEventListener('pointerdown', primeiroToque);
+            v.currentTime = 0;
+            v.muted = false;
+            tocar();
+            intro.scrollIntoView({ behavior: 'smooth' });
         });
     }
 
-    // Ao carregar a página, abre automaticamente
-    abrir(false);
+    // Ao carregar a página, começa a tocar
+    v.muted = false;
+    tocar();
+    atualizarSom();
+    atualizarFundo();
 })();
