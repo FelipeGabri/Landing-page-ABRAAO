@@ -62,6 +62,47 @@
     <!-- /FIM DO ESPAÇO DE RASTREAMENTO (BODY) -->
 
     <!-- ============================================================
+         VÍDEO DE INTRODUÇÃO — tela cheia ao abrir a página
+         Arquivo: Videos/introducao.mp4
+    ============================================================= -->
+    <div class="intro-video" id="introVideo" role="dialog" aria-modal="true" aria-label="Vídeo de apresentação">
+
+        <!-- Fundo desfocado (só aparece no computador/tablet, onde sobram bordas) -->
+        <video class="intro-fundo" id="introFundo" muted loop playsinline preload="none" aria-hidden="true"
+            tabindex="-1">
+            <source src="Videos/introducao.mp4" type="video/mp4">
+        </video>
+
+        <!-- Vídeo principal -->
+        <video class="intro-principal" id="introPrincipal" playsinline preload="auto">
+            <source src="Videos/introducao.mp4" type="video/mp4">
+        </video>
+
+        <div class="intro-sombra" aria-hidden="true"></div>
+
+        <button type="button" class="intro-som" id="introSom" aria-pressed="false">
+            <svg class="icone-mudo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 5 6 9H2v6h4l5 4V5z" />
+                <path d="m22 9-6 6M16 9l6 6" />
+            </svg>
+            <svg class="icone-som" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 5 6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" />
+            </svg>
+            <span id="introSomTexto">Ativar som</span>
+        </button>
+
+        <button type="button" class="intro-fechar" id="introFechar" aria-label="Fechar vídeo">
+            Fechar <span aria-hidden="true">✕</span>
+        </button>
+
+        <a href="#agendar" class="botao-principal intro-agendar" id="introAgendar"
+            data-evento="cta_video">Agendar reunião</a>
+    </div>
+
+    <!-- ============================================================
          CABEÇALHO — só logo + CTA (sem menu, para não dispersar o lead)
     ============================================================= -->
     <header class="cabecalho-site">
@@ -75,7 +116,7 @@
     ============================================================= -->
     <section class="hero-principal" id="inicio">
 
-        <video class="video-fundo" autoplay muted loop playsinline>
+        <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
             <source src="Videos/fundo.mp4" type="video/mp4">
         </video>
 
@@ -99,6 +140,12 @@
                     <a href="https://wa.me/5543991041313?text=Ol%C3%A1!%20Quero%20agendar%20uma%20reuni%C3%A3o%20sobre%20planejamento%20patrimonial."
                         class="botao-secundario" target="_blank" rel="noopener noreferrer"
                         data-evento="whatsapp_hero">Falar no WhatsApp</a>
+                    <button type="button" class="botao-assistir" id="botaoAssistir" data-evento="assistir_video">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        Assistir Vídeo
+                    </button>
                 </div>
             </div>
 
