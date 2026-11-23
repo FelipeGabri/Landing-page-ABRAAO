@@ -144,7 +144,12 @@
                     <a href="https://wa.me/5543991041313?text=Ol%C3%A1!%20Quero%20agendar%20uma%20reuni%C3%A3o%20sobre%20planejamento%20patrimonial."
                         class="botao-secundario" target="_blank" rel="noopener noreferrer"
                         data-evento="whatsapp_hero">Falar no WhatsApp</a>
-
+                    <button type="button" class="botao-assistir" id="botaoAssistir" data-evento="assistir_video">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        ASSISTIR VÍDEO
+                    </button>
                 </div>
             </div>
 
@@ -393,7 +398,13 @@
                 </ul>
             </div>
 
-            <form class="formulario-contato revelar" id="formularioContato" novalidate>
+            <form class="formulario-contato revelar" id="formularioContato" name="contato" method="POST"
+                data-netlify="true" netlify-honeypot="bot-field" novalidate>
+                <input type="hidden" name="form-name" value="contato">
+                <input type="hidden" name="origem" id="origem" value="">
+                <p class="campo-oculto" aria-hidden="true">
+                    <label>Não preencha: <input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label>
+                </p>
                 <h3>Agende sua reunião</h3>
                 <p class="subtitulo-form">Preencha e continue a conversa pelo WhatsApp.</p>
 

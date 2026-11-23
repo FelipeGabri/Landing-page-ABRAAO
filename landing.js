@@ -12,6 +12,42 @@
 var NUMERO_WHATSAPP = '5543991041313';
 
 // ------------------------------------------------------------
+// ORIGEM DO LEAD — lê os parâmetros do link do anúncio
+// (utm_source, utm_campaign, utm_content) ou, na falta deles,
+// o fbclid que a Meta adiciona sozinha. Vai na mensagem do
+// WhatsApp para você saber de qual anúncio a pessoa veio.
+// ------------------------------------------------------------
+var ORIGEM = (function () {
+    var p = new URLSearchParams(window.location.search);
+    var partes = [p.get('utm_source'), p.get('utm_campaign'), p.get('utm_content')].filter(Boolean);
+    if (partes.length) return partes.join(' / ');
+    if (p.get('fbclid')) return 'anuncio Meta';
+    return 'site';
+})();
+
+var campoOrigem = document.getElementById('origem');
+if (campoOrigem) { campoOrigem.value = ORIGEM; }
+
+// Todos os links de WhatsApp levam a origem na mensagem pronta
+document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+    try {
+        var u = new URL(a.href);
+        var t = u.searchParams.get('text') || 'Olá! Quero agendar uma reunião.';
+        u.searchParams.set('text', t + '\n\n(Origem: ' + ORIGEM + ')');
+        a.href = u.toString();
+    } catch (err) { }
+});
+
+// Meta Pixel: QUALQUER clique em link de WhatsApp conta como Contato
+document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+        if (window.fbq) { fbq('track', 'Contact', { content_name: a.getAttribute('data-evento') || 'whatsapp' }); }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'clique_whatsapp', local: a.getAttribute('data-evento') || 'whatsapp' });
+    });
+});
+
+// ------------------------------------------------------------
 // 1. Reveal ao rolar a página
 // ------------------------------------------------------------
 (function () {
@@ -67,7 +103,8 @@ document.getElementById('formularioContato').addEventListener('submit', function
         'Assunto: ' + tema + '.\n' +
         (caso ? 'Meu caso: ' + caso + '\n' : '') +
         'Meu WhatsApp: ' + tel + '\n' +
-        'Gostaria de agendar uma reunião estratégica.';
+        'Gostaria de agendar uma reunião estratégica.\n\n' +
+        '(Origem: ' + ORIGEM + ')';
 
     // Evento de conversão (configure o gatilho "lead_formulario" no GTM)
     window.dataLayer = window.dataLayer || [];
@@ -75,6 +112,26 @@ document.getElementById('formularioContato').addEventListener('submit', function
 
     // Meta Pixel: conversão de Lead
     if (window.fbq) { fbq('track', 'Lead', { content_name: tema }); }
+
+    // Cópia dos dados no Netlify Forms (painel do Netlify → Forms).
+    // Assim o contato não se perde mesmo que a pessoa não envie a mensagem no WhatsApp.
+    try {
+        var dados = new URLSearchParams({
+            'form-name': 'contato',
+            'bot-field': '',
+            nome: nome,
+            telefone: tel,
+            tema: tema,
+            mensagem: caso,
+            origem: ORIGEM
+        });
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: dados.toString(),
+            keepalive: true
+        }).catch(function () { });
+    } catch (err) { }
 
     window.open('https://wa.me/' + NUMERO_WHATSAPP + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
 });
@@ -86,9 +143,6 @@ document.querySelectorAll('[data-evento]').forEach(function (el) {
     el.addEventListener('click', function () {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({ event: 'clique_cta', local: el.getAttribute('data-evento') });
-
-        // Meta Pixel: clique no WhatsApp conta como Contato
-        if (window.fbq && el.href && el.href.indexOf('wa.me') !== -1) { fbq('track', 'Contact'); }
     });
 });
 

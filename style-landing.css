@@ -1270,3 +1270,12 @@ section h2 {
         width: 100%;
     }
 }
+
+/* Campo-isca anti-spam do formulário (invisível para pessoas) */
+.campo-oculto {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
